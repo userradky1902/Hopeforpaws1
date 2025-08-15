@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetMe - Find Your Perfect Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>PetMe</h1>
+                    <p>Saving Lives • Saving Animals</p>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#pets">Meet Pets</a>
+                <a href="#donation">Donate</a>
+                <a href="#success">Success Stories</a>
+                <button class="btn-outline" onclick="openPartnerModal()">Become a Partner</button>
+                <button class="btn-primary" onclick="openContactModal()">Contact Us</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Contact Us</h2>
+                <span class="close" onclick="closeContactModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 98765 43210</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@petme.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Pet Street, Animal City, India</span>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h4>Send us a message:</h4>
+                    <form onsubmit="sendMessage(event)">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" rows="3" required></textarea>
+                        <button type="submit" class="btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partner Modal -->
+    <div id="partnerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Become a Partner</h2>
+                <span class="close" onclick="closePartnerModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="partner-info">
+                    <p class="partner-description">
+                        Join us in our mission to save animals! Partner with PetMe to make a bigger impact in animal welfare. 
+                        Whether you\'re a veterinary clinic, pet supply store, or animal welfare organization, we\'d love to collaborate.
+                    </p>
+                </div>
+                
+                <div class="partner-form">
+                    <h4>Partnership Application:</h4>
+                    <form onsubmit="submitPartnerApplication(event)">
+                        <div class="form-row">
+                            <input type="text" placeholder="Organization Name" required>
+                            <input type="text" placeholder="Contact Person" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="email" placeholder="Email Address" required>
+                            <input type="tel" placeholder="Phone Number" required>
+                        </div>
+                        <input type="text" placeholder="Organization Type (e.g., Veterinary Clinic, Pet Store)" required>
+                        <textarea placeholder="Partnership Purpose - How would you like to collaborate with us?" rows="4" required></textarea>
+                        <div class="form-row">
+                            <input type="text" placeholder="City" required>
+                            <input type="text" placeholder="State" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adopt Modal -->
+    <div id="adoptModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="adoptPetName">Adopt Pet</h2>
+                <span class="close" onclick="closeAdoptModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p class="adopt-description">
+                    Thank you for your interest in adopting <span id="adoptPetNameSpan" style="font-weight: bold; color: #ea580c;"></span>! Please fill out the form below to begin the adoption process. Our team will review your application and contact you shortly.
+                </p>
+                <form onsubmit="submitAdoptionApplication(event)">
+                    <h4>Your Details:</h4>
+                    <input type="hidden" id="adoptedPetId" name="adoptedPetId">
+                    <input type="text" placeholder="Your Full Name" required>
+                    <input type="email" placeholder="Your Email Address" required>
+                    <input type="tel" placeholder="Your Phone Number" required>
+                    <input type="text" placeholder="Your Current Address" required>
+                    <div class="form-row">
+                        <input type="text" placeholder="City" required>
+                        <input type="text" placeholder="State" required>
+                    </div>
+                    <textarea placeholder="Tell us about your living situation and why you want to adopt this pet." rows="4" required></textarea>
+                    <button type="submit" class="btn-primary">Submit Adoption Application</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Modal -->
+    <div id="volunteerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Become a Volunteer</h2>
+                <span class="close" onclick="closeVolunteerModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p class="volunteer-description">
+                    Join our amazing team of volunteers and help make a difference in the lives of animals! Whether you have a few hours a week or a day a month, every contribution matters. We have various volunteer opportunities to match your skills and interests.
+                </p>
+                <form onsubmit="submitVolunteerApplication(event)">
+                    <h4>Volunteer Application:</h4>
+                    <input type="text" placeholder="Your Full Name" required>
+                    <input type="email" placeholder="Your Email Address" required>
+                    <input type="tel" placeholder="Your Phone Number" required>
+                    <div class="form-row">
+                        <input type="text" placeholder="City" required>
+                        <input type="text" placeholder="State" required>
+                    </div>
+                    <select required>
+                        <option value="">Select your preferred volunteer activity</option>
+                        <option value="animal-care">Animal Care & Feeding</option>
+                        <option value="dog-walking">Dog Walking & Exercise</option>
+                        <option value="adoption-events">Adoption Events & Outreach</option>
+                        <option value="fundraising">Fundraising & Events</option>
+                        <option value="transport">Animal Transport</option>
+                        <option value="administrative">Administrative Support</option>
+                        <option value="photography">Pet Photography</option>
+                        <option value="social-media">Social Media & Marketing</option>
+                    </select>
+                    <select required>
+                        <option value="">How much time can you commit?</option>
+                        <option value="2-4-hours-week">2-4 hours per week</option>
+                        <option value="4-8-hours-week">4-8 hours per week</option>
+                        <option value="8-12-hours-week">8-12 hours per week</option>
+                        <option value="weekend-only">Weekends only</option>
+                        <option value="flexible">Flexible schedule</option>
+                    </select>
+                    <textarea placeholder="Tell us about your experience with animals and why you want to volunteer with us." rows="4" required></textarea>
+                    <button type="submit" class="btn-primary">Submit Volunteer Application</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in">
+                <span class="title-adopt">Adopt</span> Me
+            </h1>
+            <p class="hero-subtitle fade-in fade-in-delay-1">
+                Give life to an animal in need. Find your perfect companion today.
+            </p>
+            <div class="hero-buttons fade-in fade-in-delay-2">
+                <button class="btn-primary">Find Your Pet</button>
+                <button class="btn-outline">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>About Us</h2>
+                <p>Our mission is to provide a platform that connects animal lovers with pets in need of a forever home, while also providing emergency medical care for stray animals in distress. We strive to make a difference in the lives of these innocent creatures by offering options to adopt, donate, and report stray animals in need of immediate assistance.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card fade-in fade-in-delay-1">
+                    <i class="fas fa-heart"></i>
+                    <h3>1000+ Lives Saved</h3>
+                    <p>We've successfully found loving homes for over 1000 pets in need.</p>
+                </div>
+                
+                <div class="stat-card fade-in fade-in-delay-2">
+                    <i class="fas fa-home"></i>
+                    <h3>500+ Happy Families</h3>
+                    <p>Families across the country have found their perfect companions through us.</p>
+                </div>
+                
+                <div class="stat-card fade-in fade-in-delay-3">
+                    <i class="fas fa-star"></i>
+                    <h3>24/7 Emergency Care</h3>
+                    <p>Round-the-clock emergency medical care for stray animals in distress.</p>
+                </div>
+            </div>
+            
+            <div class="volunteer-section fade-in fade-in-delay-3">
+                <button class="btn-primary">Become a Volunteer</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pet Section -->
+    <section id="pets" class="pets-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Meet Our Friends</h2>
+                <p>These amazing animals are looking for their forever homes. Each one has a unique personality and story.</p>
+            </div>
+            
+            <div class="pets-grid">
+                <div class="pet-card fade-in fade-in-delay-1">
+                    <div class="pet-image">
+                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=400" alt="Bongo">
+                        <span class="availability-badge">Available</span>
+                    </div>
+                    <div class="pet-info">
+                        <div class="pet-header">
+                            <div>
+                                <h3>Bongo</h3>
+                                <p>Golden Retriever</p>
+                            </div>
+                            <div class="adoption-fee">
+                                <span>₹5,000</span>
+                                <small>Adoption Fee</small>
+                            </div>
+                        </div>
+                        
+                        <div class="pet-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>8 years</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-user"></i>
+                                <span>Male</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Golden Brown</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Delhi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="personality">
+                            <p>Personality:</p>
+                            <div class="personality-tags">
+                                <span class="tag">Friendly</span>
+                                <span class="tag">Energetic</span>
+                                <span class="tag">Good with kids</span>
+                            </div>
+                        </div>
+                        
+                        <p class="pet-story">Bongo is a loving companion who enjoys playing fetch and long walks in the park.</p>
+                        
+                        <button class="btn-primary adopt-btn">Adopt Bongo</button>
+                    </div>
+                </div>
+
+                <div class="pet-card fade-in fade-in-delay-2">
+                    <div class="pet-image">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" alt="Luna">
+                        <span class="availability-badge">Available</span>
+                    </div>
+                    <div class="pet-info">
+                        <div class="pet-header">
+                            <div>
+                                <h3>Luna</h3>
+                                <p>Mixed Breed</p>
+                            </div>
+                            <div class="adoption-fee">
+                                <span>₹3,000</span>
+                                <small>Adoption Fee</small>
+                            </div>
+                        </div>
+                        
+                        <div class="pet-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>3 years</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-user"></i>
+                                <span>Female</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Brown & White</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Mumbai</span>
+                            </div>
+                        </div>
+                        
+                        <div class="personality">
+                            <p>Personality:</p>
+                            <div class="personality-tags">
+                                <span class="tag">Gentle</span>
+                                <span class="tag">Loyal</span>
+                                <span class="tag">Calm</span>
+                            </div>
+                        </div>
+                        
+                        <p class="pet-story">Luna is a gentle soul who loves cuddles and is great with children.</p>
+                        
+                        <button class="btn-primary adopt-btn">Adopt Luna</button>
+                    </div>
+                </div>
+
+                <div class="pet-card fade-in fade-in-delay-3">
+                    <div class="pet-image">
+                        <img src="https://images.unsplash.com/photo-1551717743-49959800b1f6?w=400" alt="Max">
+                        <span class="availability-badge">Available</span>
+                    </div>
+                    <div class="pet-info">
+                        <div class="pet-header">
+                            <div>
+                                <h3>Max</h3>
+                                <p>Australian Shepherd</p>
+                            </div>
+                            <div class="adoption-fee">
+                                <span>₹4,500</span>
+                                <small>Adoption Fee</small>
+                            </div>
+                        </div>
+                        
+                        <div class="pet-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>5 years</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-user"></i>
+                                <span>Male</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Tri-color</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bangalore</span>
+                            </div>
+                        </div>
+                        
+                        <div class="personality">
+                            <p>Personality:</p>
+                            <div class="personality-tags">
+                                <span class="tag">Active</span>
+                                <span class="tag">Smart</span>
+                                <span class="tag">Protective</span>
+                            </div>
+                        </div>
+                        
+                        <p class="pet-story">Max is an intelligent and active dog who loves outdoor adventures.</p>
+                        
+                        <button class="btn-primary adopt-btn">Adopt Max</button>
+                    </div>
+                </div>
+
+                <div class="pet-card fade-in fade-in-delay-1">
+                    <div class="pet-image">
+                        <img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=400" alt="Whiskers">
+                        <span class="availability-badge">Available</span>
+                    </div>
+                    <div class="pet-info">
+                        <div class="pet-header">
+                            <div>
+                                <h3>Whiskers</h3>
+                                <p>Domestic Shorthair</p>
+                            </div>
+                            <div class="adoption-fee">
+                                <span>₹2,000</span>
+                                <small>Adoption Fee</small>
+                            </div>
+                        </div>
+                        
+                        <div class="pet-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>2 years</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-user"></i>
+                                <span>Female</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Orange & White</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Chennai</span>
+                            </div>
+                        </div>
+                        
+                        <div class="personality">
+                            <p>Personality:</p>
+                            <div class="personality-tags">
+                                <span class="tag">Playful</span>
+                                <span class="tag">Affectionate</span>
+                                <span class="tag">Independent</span>
+                            </div>
+                        </div>
+                        
+                        <p class="pet-story">Whiskers is a playful kitten who loves to explore and play with toys.</p>
+                        
+                        <button class="btn-primary adopt-btn">Adopt Whiskers</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donation" class="donation-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Make a Difference</h2>
+                <p>Choose items to donate or enter a custom amount. Every contribution helps save lives.</p>
+            </div>
+            
+            <div class="donation-grid">
+                <div class="donation-item fade-in fade-in-delay-1" onclick="toggleDonationItem(1, 'Premium Pet Food', 500)">
+                    <div class="donation-image">
+                        <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=400" alt="Premium Pet Food">
+                        <div class="selection-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="donation-info">
+                        <h3>Premium Pet Food</h3>
+                        <p>High-quality nutrition for healthy pets</p>
+                        <div class="donation-price">
+                            <span>₹500</span>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donation-item fade-in fade-in-delay-2" onclick="toggleDonationItem(2, 'Comfort Pillow', 300)">
+                    <div class="donation-image">
+                        <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400" alt="Comfort Pillow">
+                        <div class="selection-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="donation-info">
+                        <h3>Comfort Pillow</h3>
+                        <p>Soft bedding for comfortable rest</p>
+                        <div class="donation-price">
+                            <span>₹300</span>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donation-item fade-in fade-in-delay-3" onclick="toggleDonationItem(3, 'Medical Supplies', 750)">
+                    <div class="donation-image">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400" alt="Medical Supplies">
+                        <div class="selection-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="donation-info">
+                        <h3>Medical Supplies</h3>
+                        <p>Essential medical care items</p>
+                        <div class="donation-price">
+                            <span>₹750</span>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donation-item fade-in fade-in-delay-1" onclick="toggleDonationItem(4, 'Toys & Enrichment', 200)">
+                    <div class="donation-image">
+                        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400" alt="Toys & Enrichment">
+                        <div class="selection-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="donation-info">
+                        <h3>Toys & Enrichment</h3>
+                        <p>Fun toys for mental stimulation</p>
+                        <div class="donation-price">
+                            <span>₹200</span>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donation-item fade-in fade-in-delay-2" onclick="toggleDonationItem(5, 'Blankets & Bedding', 400)">
+                    <div class="donation-image">
+                        <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400" alt="Blankets & Bedding">
+                        <div class="selection-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="donation-info">
+                        <h3>Blankets & Bedding</h3>
+                        <p>Warm bedding for cold nights</p>
+                        <div class="donation-price">
+                            <span>₹400</span>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donation-item fade-in fade-in-delay-3" onclick="toggleDonationItem(6, 'Emergency Care Fund', 1000)">
+                    <div class="donation-image">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400" alt="Emergency Care Fund">
+                        <div class="selection-overlay">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="donation-info">
+                        <h3>Emergency Care Fund</h3>
+                        <p>Support for urgent medical needs</p>
+                        <div class="donation-price">
+                            <span>₹1000</span>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="custom-donation">
+                <div class="custom-donation-card">
+                    <h3>Custom Donation Amount</h3>
+                    <div class="amount-input">
+                        <span>₹</span>
+                        <input type="number" id="customAmount" placeholder="Enter amount" min="0" oninput="updateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="donationSummary" class="donation-summary" style="display: none;">
+                <div class="summary-card">
+                    <h3>Donation Summary</h3>
+                    <div id="selectedItems"></div>
+                    <div class="total-amount">
+                        <span>Total Amount:</span>
+                        <span id="totalAmount">₹0</span>
+                    </div>
+                    <button class="btn-primary donate-now-btn" onclick="processDonation()">
+                        <i class="fas fa-dollar-sign"></i>
+                        Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section id="success" class="success-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Success Stories</h2>
+                <p>See how your donations and adoptions have transformed lives. These heartwarming stories show the real impact of your support.</p>
+            </div>
+            
+            <div class="success-grid">
+                <div class="success-card fade-in fade-in-delay-1">
+                    <div class="success-image">
+                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=400" alt="Buddy">
+                    </div>
+                    <div class="success-info">
+                        <div class="success-header">
+                            <div class="success-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div>
+                                <h3>Buddy</h3>
+                                <p>Adopted by Sarah Johnson</p>
+                            </div>
+                        </div>
+                        <p class="success-story">Buddy was rescued from the streets and now lives happily with his new family. He loves playing in the garden and has become the perfect companion for our children.</p>
+                        <div class="success-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Delhi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card fade-in fade-in-delay-2">
+                    <div class="success-image">
+                        <img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=400" alt="Mittens">
+                    </div>
+                    <div class="success-info">
+                        <div class="success-header">
+                            <div class="success-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div>
+                                <h3>Mittens</h3>
+                                <p>Adopted by Raj Patel</p>
+                            </div>
+                        </div>
+                        <p class="success-story">Mittens was a shy kitten when we first met her. Now she's the queen of our house and brings so much joy to our daily lives.</p>
+                        <div class="success-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card fade-in fade-in-delay-3">
+                    <div class="success-image">
+                        <img src="https://images.unsplash.com/photo-1551717743-49959800b1f6?w=400" alt="Rocky">
+                    </div>
+                    <div class="success-info">
+                        <div class="success-header">
+                            <div class="success-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div>
+                                <h3>Rocky</h3>
+                                <p>Adopted by Priya Sharma</p>
+                            </div>
+                        </div>
+                        <p class="success-story">Rocky needed special medical care when we adopted him. Thanks to the support from PetMe, he's now healthy and full of energy.</p>
+                        <div class="success-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bangalore</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Get in Touch</h2>
+                <p>Ready to adopt or have questions? We're here to help you find your perfect companion.</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info fade-in fade-in-delay-1">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item" data-type="phone" onclick="window.open('tel:+919876543210', '_self')">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        <div class="contact-item" data-type="email" onclick="window.open('mailto:info@petme.com', '_self')">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@petme.com</span>
+                        </div>
+                        <div class="contact-item" data-type="address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Pet Street, Animal City, India</span>
+                        </div>
+                    </div>
+                    
+                    <div class="shelter-info">
+                        <h4>Visit Our Shelter</h4>
+                        <p>Come visit us to meet our animals in person. Our shelter is open daily from 9 AM to 6 PM.</p>
+                        <button class="btn-primary">Get Directions</button>
+                    </div>
+                </div>
+                
+                <div class="contact-form-section fade-in fade-in-delay-2">
+                    <div class="contact-form-card">
+                        <h3>Send us a Message</h3>
+                        <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+                        
+                        <form class="contact-form" onsubmit="sendContactMessage(event)">
+                            <div class="form-row">
+                                <input type="text" placeholder="First Name" required>
+                                <input type="text" placeholder="Last Name" required>
+                            </div>
+                            <input type="email" placeholder="Email Address" required>
+                            <input type="tel" placeholder="Phone Number">
+                            <textarea placeholder="Your Message" rows="4" required></textarea>
+                            <button type="submit" class="btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-heart"></i>
+                        <h3>PetMe</h3>
+                    </div>
+                    <p>Connecting loving families with pets in need. Together, we're saving lives and creating forever bonds.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#pets">Adopt a Pet</a></li>
+                        <li><a href="#donation">Donate</a></li>
+                        <li><a href="#success">Success Stories</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Foster a Pet</a></li>
+                        <li><a href="#">Emergency Care</a></li>
+                        <li><a href="#">Pet Care Tips</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <div class="footer-contact">
+                        <p>+91 98765 43210</p>
+                        <p>info@petme.com</p>
+                        <p>123 Pet Street<br>Animal City, India</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 PetMe. All rights reserved. Made with ❤️ for animals in need.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dog Mascot -->
+    <div class="dog-mascot" onclick="showMascotMessage()">
+        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=100&h=100&fit=crop&crop=face" alt="Friendly Dog Mascot" class="mascot-image">
+        <div class="speech-bubble" id="speechBubble">
+            Welcome! Let's find your perfect companion! 🐾
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
